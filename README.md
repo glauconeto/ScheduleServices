@@ -2,4 +2,4 @@
 
 Sistema de agendamento de clínica de estética utilizando arquitetura de microsserviços.
 
-Sistema feito e estururado com Claude.ai
+Sistema feito e estuturado com Claude.ai
