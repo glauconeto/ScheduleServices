@@ -1,0 +1,59 @@
+project-root/
+├── package.json
+├── docker-compose.yml
+├── api-gateway/
+│   ├── package.json
+│   ├── src/
+│   │   ├── server.js
+│   │   ├── routes/
+│   │   │   └── index.js
+│   │   └── middleware/
+│   │       └── auth.middleware.js
+│   └── Dockerfile
+├── schedule-service/
+│   ├── package.json
+│   ├── src/
+│   │   ├── server.js
+│   │   ├── models/
+│   │   │   └── schedule.model.js
+│   │   ├── controllers/
+│   │   │   └── schedule.controller.js
+│   │   ├── routes/
+│   │   │   └── schedule.routes.js
+│   │   └── services/
+│   │       └── schedule.service.js
+│   └── Dockerfile
+├── auth-service/
+│   ├── package.json
+│   ├── src/
+│   │   ├── server.js
+│   │   ├── models/
+│   │   │   └── user.model.js
+│   │   ├── controllers/
+│   │   │   └── auth.controller.js
+│   │   ├── routes/
+│   │   │   └── auth.routes.js
+│   │   └── services/
+│   │       └── auth.service.js
+│   └── Dockerfile
+├── notification-service/
+│   ├── package.json
+│   ├── src/
+│   │   ├── server.js
+│   │   ├── controllers/
+│   │   │   └── notification.controller.js
+│   │   ├── services/
+│   │   │   └── notification.service.js
+│   │   └── templates/
+│   │       └── email-templates.js
+│   └── Dockerfile
+└── client/
+    ├── package.json
+    ├── public/
+    │   ├── index.html
+    │   └── favicon.ico
+    └── src/
+        ├── components/
+        ├── services/
+        ├── styles/
+        └── App.js
