@@ -1,10 +1,10 @@
+const { Op } = require('sequelize');
 const Schedule = require('../models/schedule.model');
 
 class ScheduleService {
   async createSchedule(scheduleData) {
     try {
-      const schedule = new Schedule(scheduleData);
-      return await schedule.save();
+      return await Schedule.create(scheduleData);
     } catch (error) {
       throw new Error(`Error creating schedule: ${error.message}`);
     }
@@ -12,7 +12,7 @@ class ScheduleService {
 
   async getScheduleById(scheduleId) {
     try {
-      const schedule = await Schedule.findById(scheduleId);
+      const schedule = await Schedule.findByPk(scheduleId);
       if (!schedule) {
         throw new Error('Schedule not found');
       }
@@ -24,7 +24,10 @@ class ScheduleService {
 
   async getUserSchedules(userId) {
     try {
-      return await Schedule.find({ userId }).sort({ startTime: 1 });
+      return await Schedule.findAll({
+        where: { userId },
+        order: [['startTime', 'ASC']]
+      });
     } catch (error) {
       throw new Error(`Error fetching user schedules: ${error.message}`);
     }
@@ -32,15 +35,19 @@ class ScheduleService {
 
   async updateSchedule(scheduleId, updateData) {
     try {
-      const schedule = await Schedule.findByIdAndUpdate(
-        scheduleId,
+      const [updatedRowsCount, updatedSchedules] = await Schedule.update(
         updateData,
-        { new: true, runValidators: true }
+        {
+          where: { id: scheduleId },
+          returning: true
+        }
       );
-      if (!schedule) {
+
+      if (updatedRowsCount === 0) {
         throw new Error('Schedule not found');
       }
-      return schedule;
+
+      return updatedSchedules[0];
     } catch (error) {
       throw new Error(`Error updating schedule: ${error.message}`);
     }
@@ -48,11 +55,15 @@ class ScheduleService {
 
   async deleteSchedule(scheduleId) {
     try {
-      const schedule = await Schedule.findByIdAndDelete(scheduleId);
-      if (!schedule) {
+      const deletedCount = await Schedule.destroy({
+        where: { id: scheduleId }
+      });
+
+      if (deletedCount === 0) {
         throw new Error('Schedule not found');
       }
-      return schedule;
+
+      return true;
     } catch (error) {
       throw new Error(`Error deleting schedule: ${error.message}`);
     }
@@ -60,11 +71,18 @@ class ScheduleService {
 
   async getSchedulesByDateRange(userId, startDate, endDate) {
     try {
-      return await Schedule.find({
-        userId,
-        startTime: { $gte: startDate },
-        endTime: { $lte: endDate }
-      }).sort({ startTime: 1 });
+      return await Schedule.findAll({
+        where: {
+          userId,
+          startTime: {
+            [Op.gte]: startDate
+          },
+          endTime: {
+            [Op.lte]: endDate
+          }
+        },
+        order: [['startTime', 'ASC']]
+      });
     } catch (error) {
       throw new Error(`Error fetching schedules by date range: ${error.message}`);
     }

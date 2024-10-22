@@ -1,38 +1,53 @@
-// src/models/schedule.model.js
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-const scheduleSchema = new mongoose.Schema({
-  patientName: {
-    type: String,
-    required: true
+const Schedule = sequelize.define('Schedule', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
   },
-  doctorName: {
-    type: String,
-    required: true
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    field: 'user_id'
   },
-  date: {
-    type: Date,
-    required: true
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
-  time: {
-    type: String,
-    required: true
+  startTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    field: 'start_time'
   },
-  type: {
-    type: String,
-    enum: ['CONSULTATION', 'FOLLOW_UP', 'EXAMINATION'],
-    default: 'CONSULTATION'
+  endTime: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    field: 'end_time'
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  participants: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: []
   },
   status: {
-    type: String,
-    enum: ['SCHEDULED', 'COMPLETED', 'CANCELLED'],
-    default: 'SCHEDULED'
+    type: DataTypes.ENUM('pending', 'confirmed', 'cancelled'),
+    defaultValue: 'pending'
   },
-  notes: String,
-  createdAt: {
-    type: Date,
-    default: Date.now
+  location: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
+}, {
+  tableName: 'schedules',
+  underscored: true,
+  timestamps: true,
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
 });
 
-module.exports = mongoose.model('Schedule', scheduleSchema);
+module.exports = Schedule;

@@ -1,0 +1,65 @@
+{
+    "development": {
+      "username": "postgres",
+      "password": "postgres",
+      "database": "schedule_dev",
+      "host": "127.0.0.1",
+      "port": 5432,
+      "dialect": "postgres",
+      "logging": true,
+      "define": {
+        "timestamps": true,
+        "underscored": true
+      },
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      }
+    },
+    "test": {
+      "username": "postgres",
+      "password": "postgres",
+      "database": "schedule_test",
+      "host": "127.0.0.1",
+      "port": 5432,
+      "dialect": "postgres",
+      "logging": false,
+      "define": {
+        "timestamps": true,
+        "underscored": true
+      },
+      "pool": {
+        "max": 5,
+        "min": 0,
+        "acquire": 30000,
+        "idle": 10000
+      }
+    },
+    "production": {
+      "username": "${DB_USER}",
+      "password": "${DB_PASSWORD}",
+      "database": "${DB_NAME}",
+      "host": "${DB_HOST}",
+      "port": "${DB_PORT}",
+      "dialect": "postgres",
+      "logging": false,
+      "define": {
+        "timestamps": true,
+        "underscored": true
+      },
+      "pool": {
+        "max": 20,
+        "min": 5,
+        "acquire": 60000,
+        "idle": 10000
+      },
+      "dialectOptions": {
+        "ssl": {
+          "require": true,
+          "rejectUnauthorized": false
+        }
+      }
+    }
+  }
