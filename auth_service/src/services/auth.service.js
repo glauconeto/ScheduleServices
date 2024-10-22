@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+const dbConfig = require('../../config/database.json')[process.env.NODE_ENV || 'development'];
 
 class AuthService {
   async register(userData) {
