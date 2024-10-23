@@ -1,59 +1,78 @@
-project-root/
+.
+├── api_gateway
+│   ├── src
+│   │   ├── middleware
+│   │   │   └── auth.middleware.js
+│   │   ├── routes
+│   │   │   └── index.js
+│   │   └── server.js
+│   ├── Dockerfile
+│   └── package.json
+├── auth_service
+│   ├── src
+│   │   ├── controllers
+│   │   │   └── auth.controller.js
+│   │   ├── models
+│   │   │   └── auth.model.js
+│   │   ├── routes
+│   │   │   └── auth.routes.js
+│   │   ├── services
+│   │   │   └── auth.service.js
+│   │   └── server.js
+│   ├── Dockerfile
+│   └── package.json
+├── client
+│   ├── src
+│   │   ├── components
+│   │   │   └── auth
+│   │   │       ├── Login.js
+│   │   │       └── Register.js
+│   │   ├── context
+│   │   │   └── AuthContext.js
+│   │   ├── css
+│   │   │   └── main.css
+│   │   ├── public
+│   │   │   └── index.html
+│   │   ├── routes
+│   │   │   └── index.js
+│   │   ├── services
+│   │   │   ├── authService.js
+│   │   │   └── scheduleService.js
+│   │   ├── App.js
+│   │   └── server.js
+│   ├── Dockerfile
+│   └── package.json
+├── config
+│   └── database.json
+├── notification_service
+│   ├── src
+│   │   ├── controllers
+│   │   │   └── notification.controller.js
+│   │   ├── routes
+│   │   │   └── index.js
+│   │   ├── services
+│   │   │   └── notification.service.js
+│   │   ├── templates
+│   │   │   └── email_template.js
+│   │   └── server.js
+│   ├── Dockerfile
+│   └── package.json
+├── schedule_service
+│   ├── src
+│   │   ├── controllers
+│   │   │   └── schedule.controller.js
+│   │   ├── models
+│   │   │   └── schedule.model.js
+│   │   ├── routes
+│   │   │   └── schedule.routes.js
+│   │   ├── services
+│   │   │   └── schedule.service.js
+│   │   └── server.js
+│   ├── Dockerfile
+│   └── package.json
 ├── package.json
-├── docker-compose.yml
-├── api-gateway/
-│   ├── package.json
-│   ├── src/
-│   │   ├── server.js
-│   │   ├── routes/
-│   │   │   └── index.js
-│   │   └── middleware/
-│   │       └── auth.middleware.js
-│   └── Dockerfile
-├── schedule-service/
-│   ├── package.json
-│   ├── src/
-│   │   ├── server.js
-│   │   ├── models/
-│   │   │   └── schedule.model.js
-│   │   ├── controllers/
-│   │   │   └── schedule.controller.js
-│   │   ├── routes/
-│   │   │   └── schedule.routes.js
-│   │   └── services/
-│   │       └── schedule.service.js
-│   └── Dockerfile
-├── auth-service/
-│   ├── package.json
-│   ├── src/
-│   │   ├── server.js
-│   │   ├── models/
-│   │   │   └── user.model.js
-│   │   ├── controllers/
-│   │   │   └── auth.controller.js
-│   │   ├── routes/
-│   │   │   └── auth.routes.js
-│   │   └── services/
-│   │       └── auth.service.js
-│   └── Dockerfile
-├── notification-service/
-│   ├── package.json
-│   ├── src/
-│   │   ├── server.js
-│   │   ├── controllers/
-│   │   │   └── notification.controller.js
-│   │   ├── services/
-│   │   │   └── notification.service.js
-│   │   └── templates/
-│   │       └── email-templates.js
-│   └── Dockerfile
-└── client/
-    ├── package.json
-    ├── public/
-    │   ├── index.html
-    │   └── favicon.ico
-    └── src/
-        ├── components/
-        ├── services/
-        ├── styles/
-        └── App.js
+├── package-lock.json
+├── project-structure.txt
+└── README.md
+
+33 directories, 43 files
