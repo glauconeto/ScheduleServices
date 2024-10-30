@@ -10,3 +10,6 @@ Sistema de gerenciamento de agendas para uma clínica. Feito utilizando:
 - Express
 - Postgres
 - React
+
+Estrutura de microsserviços:
+TODO
