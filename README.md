@@ -13,13 +13,3 @@ Sistema de gerenciamento de agendas para uma clínica. Feito utilizando:
 
 Estrutura de microsserviços:
 TODO
-
-Sistema de gerenciamento de agendas para uma clínica. Feito utilizando:
-
-- Node.JS
-- Express
-- Postgres
-- React
-
-Estrutura de microsserviços:
-TODO
