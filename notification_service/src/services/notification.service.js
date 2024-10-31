@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const emailTemplates = require('../templates/email_templates');
+const emailTemplates = require('../templates/email_template');
 const handlebars = require('handlebars');
 
 class NotificationService {

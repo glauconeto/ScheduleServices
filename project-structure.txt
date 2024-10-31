@@ -71,8 +71,7 @@
 │   ├── Dockerfile
 │   └── package.json
 ├── package.json
-├── package-lock.json
 ├── project-structure.txt
 └── README.md
 
-33 directories, 43 files
+33 directories, 42 files

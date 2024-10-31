@@ -1,22 +1,37 @@
-import axios from 'axios';
+// client/src/services/authService.js
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3000/auth'; // Update with your actual auth service URL
 
-export const authService = {
-  async login(credentials) {
-    const response = await axios.post(`${API_URL}/auth/login`, credentials);
-    return response.data;
-  },
-
-  async register(userData) {
-    const response = await axios.post(`${API_URL}/auth/register`, userData);
-    return response.data;
-  },
-
-  async verifyToken(token) {
-    const response = await axios.post(`${API_URL}/auth/verify`, {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
-  }
+const authService = {
+    login: async (email, password) => {
+        const response = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return await response.json();
+    },
+    logout: () => {
+        // Handle logout logic
+    },
+    register: async (email, password) => {
+        const response = await fetch(`${API_URL}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+        if (!response.ok) {
+            throw new Error('Registration failed');
+        }
+        return await response.json();
+    },
 };
+
+export default authService;

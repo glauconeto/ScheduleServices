@@ -1,21 +1,28 @@
-import axios from 'axios';
+// client/src/services/scheduleService.js
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3000/schedules'; // Update with your actual schedule service URL
 
-export const scheduleService = {
-  async getSchedules() {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(`${API_URL}/schedule`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
-  },
-
-  async createSchedule(scheduleData) {
-    const token = localStorage.getItem('token');
-    const response = await axios.post(`${API_URL}/schedule`, scheduleData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    return response.data;
-  }
+const scheduleService = {
+    createSchedule: async (scheduleData) => {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(scheduleData),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to create schedule');
+        }
+        return await response.json();
+    },
+    getSchedules: async () => {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error('Failed to retrieve schedules');
+        }
+        return await response.json();
+    },
 };
+
+export default scheduleService;

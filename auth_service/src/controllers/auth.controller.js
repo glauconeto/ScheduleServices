@@ -1,46 +1,28 @@
 const AuthService = require('../services/auth.service');
-const authService = new AuthService();
 
-class AuthController {
-  async register(req, res) {
+exports.register = async (req, res) => {
     try {
-      const { email, password, name } = req.body;
-      const user = await authService.register({ email, password, name });
-      res.status(201).json({ user });
+        const user = await AuthService.register(req.body);
+        res.status(201).json(user);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
-  }
+};
 
-  async login(req, res) {
+exports.login = async (req, res) => {
     try {
-      const { email, password } = req.body;
-      const { user, token } = await authService.login(email, password);
-      res.json({ user, token });
+        const token = await AuthService.login(req.body);
+        res.status(200).json({ token });
     } catch (error) {
-      res.status(401).json({ message: error.message });
+        res.status(401).json({ message: 'Invalid credentials' });
     }
-  }
+};
 
-  async verifyToken(req, res) {
+exports.validateToken = async (req, res) => {
     try {
-      const token = req.headers.authorization?.split(' ')[1];
-      const user = await authService.verifyToken(token);
-      res.json({ user });
+        const valid = await AuthService.validateToken(req.headers.authorization);
+        res.status(200).json({ valid });
     } catch (error) {
-      res.status(401).json({ message: error.message });
+        res.status(401).json({ message: 'Invalid token' });
     }
-  }
-
-  async getProfile(req, res) {
-    try {
-      const token = req.headers.authorization?.split(' ')[1];
-      const user = await authService.verifyToken(token);
-      res.json({ user });
-    } catch (error) {
-      res.status(401).json({ message: error.message });
-    }
-  }
-}
-
-module.exports = new AuthController();
+};
