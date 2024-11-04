@@ -1,30 +1,30 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express, { json, urlencoded, static } from 'express';
+import { join } from 'path';
+import cors from 'cors';
+import { config } from 'dotenv';
 
 // Load environment variables
-dotenv.config();
+config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(static(join(__dirname, 'public')));
 
 // Serve the main application
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', (_req, res) => {
+  res.sendFile(join(__dirname, 'public', 'index.html'));
 });
 
 // Handle React routing, return all requests to React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(join(__dirname, 'public', 'index.html'));
 });
 
 // Error handling middleware

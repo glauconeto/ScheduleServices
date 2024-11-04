@@ -1,14 +1,11 @@
-const express = require('express');
-const dotenv = require('dotenv');
-dotenv.config();
+import express from 'express';
+import { config } from 'dotenv';
+import authMiddleware from './middleware/auth.middleware';
+import routes from './routes';
+
+config();
 
 const app = express();
-
-// Middleware
-const authMiddleware = require('./middleware/auth.middleware');
-
-// Routes
-const routes = require('./routes');
 
 // Use middleware
 app.use(authMiddleware);

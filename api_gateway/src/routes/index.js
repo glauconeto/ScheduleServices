@@ -1,6 +1,6 @@
-const express = require('express');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const router = express.Router();
+import { Router } from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+const router = Router();
 
 // Define service URLs
 const SCHEDULE_SERVICE_URL = 'http://schedule-service:4001';
@@ -12,4 +12,4 @@ router.use('/schedules', createProxyMiddleware({ target: SCHEDULE_SERVICE_URL, c
 router.use('/auth', createProxyMiddleware({ target: AUTH_SERVICE_URL, changeOrigin: true }));
 router.use('/notifications', createProxyMiddleware({ target: NOTIFICATION_SERVICE_URL, changeOrigin: true }));
 
-module.exports = router;
+export default router;

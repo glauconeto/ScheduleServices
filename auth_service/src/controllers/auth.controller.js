@@ -1,28 +1,28 @@
-const AuthService = require('../services/auth.service');
+import { register, login, validateToken } from '../services/auth.service';
 
-exports.register = async (req, res) => {
+export async function register(req, res) {
     try {
-        const user = await AuthService.register(req.body);
+        const user = await register(req.body);
         res.status(201).json(user);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-};
+}
 
-exports.login = async (req, res) => {
+export async function login(req, res) {
     try {
-        const token = await AuthService.login(req.body);
+        const token = await login(req.body);
         res.status(200).json({ token });
     } catch (error) {
         res.status(401).json({ message: 'Invalid credentials' });
     }
-};
+}
 
-exports.validateToken = async (req, res) => {
+export async function validateToken(req, res) {
     try {
-        const valid = await AuthService.validateToken(req.headers.authorization);
+        const valid = await validateToken(req.headers.authorization);
         res.status(200).json({ valid });
     } catch (error) {
         res.status(401).json({ message: 'Invalid token' });
     }
-};
+}

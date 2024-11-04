@@ -1,8 +1,6 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
 
 // Initialize Sequelize for PostgreSQL
-const sequelize = new Sequelize(process.env.POSTGRES_URI, {
+export default const sequelize = new Sequelize(process.env.POSTGRES_URI, {
     dialect: 'postgres'
 });
-
-module.exports = { sequelize };

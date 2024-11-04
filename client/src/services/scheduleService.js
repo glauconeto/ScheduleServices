@@ -1,5 +1,3 @@
-// client/src/services/scheduleService.js
-
 const API_URL = 'http://localhost:3000/schedules'; // Update with your actual schedule service URL
 
 const scheduleService = {

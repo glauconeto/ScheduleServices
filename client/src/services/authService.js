@@ -1,5 +1,3 @@
-// client/src/services/authService.js
-
 const API_URL = 'http://localhost:3000/auth'; // Update with your actual auth service URL
 
 const authService = {
