@@ -1,7 +1,7 @@
 import express from 'express';
 import { config } from 'dotenv';
-import authMiddleware from './middleware/auth.middleware';
-import routes from './routes';
+import authMiddleware from './middleware/auth.middleware.js';
+import routes from './routes/index.js'
 
 config();
 

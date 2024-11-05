@@ -3,13 +3,20 @@
 │   ├── src
 │   │   ├── middleware
 │   │   │   └── auth.middleware.js
+│   │   ├── models
+│   │   │   └── index.js
 │   │   ├── routes
 │   │   │   └── index.js
 │   │   └── server.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── dotenv
+│   ├── package.json
+│   ├── package-lock.json
+│   └── packages.json
 ├── auth_service
 │   ├── src
+│   │   ├── config
+│   │   │   └── database.js
 │   │   ├── controllers
 │   │   │   └── auth.controller.js
 │   │   ├── models
@@ -20,7 +27,8 @@
 │   │   │   └── auth.service.js
 │   │   └── server.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── package.json
+│   └── package-lock.json
 ├── client
 │   ├── src
 │   │   ├── components
@@ -39,9 +47,11 @@
 │   │   │   ├── authService.js
 │   │   │   └── scheduleService.js
 │   │   ├── App.js
+│   │   ├── dotenv
 │   │   └── server.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── package.json
+│   └── package-lock.json
 ├── config
 │   └── database.json
 ├── notification_service
@@ -56,7 +66,8 @@
 │   │   │   └── email_template.js
 │   │   └── server.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── package.json
+│   └── package-lock.json
 ├── schedule_service
 │   ├── src
 │   │   ├── controllers
@@ -69,9 +80,11 @@
 │   │   │   └── schedule.service.js
 │   │   └── server.js
 │   ├── Dockerfile
-│   └── package.json
+│   ├── package.json
+│   └── package-lock.json
 ├── package.json
+├── package-lock.json
 ├── project-structure.txt
 └── README.md
 
-33 directories, 42 files
+35 directories, 53 files
