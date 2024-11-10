@@ -1,13 +1,13 @@
 import { sign, verify } from 'jsonwebtoken';
-import User from '../models/auth.model';
+import User from '../models/auth.model.js';
 
-export async function register(userData) {
+export async function registerService(userData) {
     const user = new User(userData);
     await user.save();
     return { email: user.email };
 }
 
-export async function login(credentials) {
+export async function loginService(credentials) {
     const user = await User.findOne({ email: credentials.email });
     if (!user || !(await user.comparePassword(credentials.password))) {
         throw new Error('Invalid credentials');
@@ -17,7 +17,7 @@ export async function login(credentials) {
     return token;
 }
 
-export async function validateToken(token) {
+export async function validateTokenService(token) {
     try {
         const decoded = verify(token, process.env.JWT_SECRET);
         return !!decoded;

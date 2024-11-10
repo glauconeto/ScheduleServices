@@ -1,38 +1,32 @@
-import { Model } from 'sequelize';
-import { hash, compare } from 'bcryptjs';
-import sequelize from '../config/database.js'; // You'll need to create this
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-class User extends Model {
-    // Instance method for password comparison
-    async comparePassword(plainPassword) {
-        return compare(plainPassword, this.password);
-    }
-}
-
-User.init({
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: true
-        }
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-}, {
-    sequelize,
-    modelName: 'User',
-    hooks: {
-        // Hook to hash password before saving
-        beforeSave: async (user) => {
-            if (user.changed('password')) {
-                user.password = await hash(user.password, 10);
-            }
-        }
-    }
+const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
+
+userSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+const User = mongoose.model('User', userSchema);
 
 export default User;

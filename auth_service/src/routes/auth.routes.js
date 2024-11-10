@@ -1,16 +1,10 @@
-import express from 'express';
-import { register, login, validateToken, authenticateToken } from '../controllers/auth.controller.js';
+import { Router } from "express";
+import { register, login, validateToken } from "../controllers/auth.controller.js";
 
-const router = express.Router();
+const router = Router();
 
-// Public routes
-router.post('/register', register);
-router.post('/login', login);
-router.get('/validate-token', validateToken);
-
-// Protected route example
-router.get('/protected', authenticateToken, (req, res) => {
-    res.json({ message: 'You have access to this protected route', user: req.user });
-});
+router.post("/register", register);
+router.post("/login", login);
+router.get("/validate-token", validateToken);
 
 export default router;
