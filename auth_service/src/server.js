@@ -1,13 +1,27 @@
 import express from 'express';
-import { json } from 'body-parser';
+import mongoose from 'mongoose';
+import dotenv from '../.env';
 import authRoutes from './routes/auth.routes.js';
 
+dotenv.config(); // Load environment variables from .env
+
 const app = express();
+const port = process.env.PORT || 3001;
 
-app.use(json());
+app.use(express.json()); // Enable JSON body parsing
 
-app.use('/auth', authRoutes);
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
-app.listen(3001, () => {
-    console.log('Auth service is running on port 3001');
+// Mount the auth routes
+app.use('/api/auth', authRoutes);
+
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });

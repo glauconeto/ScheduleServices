@@ -1,19 +1,13 @@
-import { Sequelize } from 'sequelize';
+import mongoose from 'mongoose';
 
-const sequelize = new Sequelize({
-    dialect: 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'your_password',
-    database: process.env.DB_NAME || 'your_database',
-    port: process.env.DB_PORT || 5432,
-    logging: false, // Set to console.log to see SQL queries
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-    }
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MongoDB Connected");
+  } catch (error) {
+    console.error("MongoDB Connection Error:", error);
+    process.exit(1); // Exit the process if connection fails
+  }
+};
 
-export default sequelize;
+export default connectDB;

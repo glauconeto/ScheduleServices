@@ -28,7 +28,6 @@
 │   │   └── server.js
 │   ├── Dockerfile
 │   ├── package.json
-│   └── package-lock.json
 ├── client
 │   ├── src
 │   │   ├── components
