@@ -1,32 +1,34 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import * as db from '../config/database.js';
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-});
-
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
-    return next();
+class AuthModel {
+  static async createUser(email, password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = `
+      INSERT INTO users (email, password)
+      VALUES ($1, $2)
+      RETURNING id, email`;
+    const values = [email, hashedPassword];
+    
+    try {
+      const result = await db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      throw new Error('Error creating user');
+    }
   }
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
+  static async findUserByEmail(email) {
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const values = [email];
+    
+    try {
+      const result = await db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      throw new Error('Error finding user');
+    }
+  }
+}
 
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
-};
-
-const User = mongoose.model('User', userSchema);
-
-export default User;
+export default AuthModel;

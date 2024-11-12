@@ -1,27 +1,21 @@
 import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from '../.env';
+import cors from 'cors';
 import authRoutes from './routes/auth.routes.js';
 
-dotenv.config(); // Load environment variables from .env
-
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json()); // Enable JSON body parsing
+app.use(cors());
+app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
-
-// Mount the auth routes
+// Routes
 app.use('/api/auth', authRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Auth service running on port ${PORT}`);
 });
