@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const notificationController = require('../controllers/notification.controller');
-const { authenticateToken } = require('../middleware/auth');
+import { Router } from 'express';
+import { createNotification, getUserNotifications, getNotification, markAsRead, deleteNotification, markMultipleAsRead, getUnreadCount, sendEmailNotification, subscribeToNotifications, unsubscribeFromNotifications } from '../controllers/notification.controller';
+import { authenticateToken } from '../middleware/auth';
+
+const router = Router();
 
 // Health check route
 router.get('/health', (req, res) => {
@@ -10,72 +11,72 @@ router.get('/health', (req, res) => {
 
 // Create a new notification
 router.post(
-    '/notifications', 
+    '/notifications',
     authenticateToken,
-    asyncHandler(notificationController.createNotification)
+    asyncHandler(createNotification)
 );
 
 // Get all notifications for a user
 router.get(
     '/notifications/user/:userId',
     authenticateToken,
-    asyncHandler(notificationController.getUserNotifications)
+    asyncHandler(getUserNotifications)
 );
 
 // Get a specific notification
 router.get(
     '/notifications/:id',
     authenticateToken,
-    asyncHandler(notificationController.getNotification)
+    asyncHandler(getNotification)
 );
 
 // Mark notification as read
 router.patch(
     '/notifications/:id/read',
     authenticateToken,
-    asyncHandler(notificationController.markAsRead)
+    asyncHandler(markAsRead)
 );
 
 // Delete a notification
 router.delete(
     '/notifications/:id',
     authenticateToken,
-    asyncHandler(notificationController.deleteNotification)
+    asyncHandler(deleteNotification)
 );
 
 // Bulk mark notifications as read
 router.patch(
     '/notifications/bulk/read',
     authenticateToken,
-    asyncHandler(notificationController.markMultipleAsRead)
+    asyncHandler(markMultipleAsRead)
 );
 
 // Get unread notifications count
 router.get(
     '/notifications/user/:userId/unread/count',
     authenticateToken,
-    asyncHandler(notificationController.getUnreadCount)
+    asyncHandler(getUnreadCount)
 );
 
 // Send email notification
 router.post(
     '/notifications/email',
     authenticateToken,
-    asyncHandler(notificationController.sendEmailNotification)
+    asyncHandler(sendEmailNotification)
 );
 
 // Subscribe to notification types
 router.post(
     '/notifications/subscribe',
     authenticateToken,
-    asyncHandler(notificationController.subscribeToNotifications)
+    asyncHandler(subscribeToNotifications)
 );
 
 // Unsubscribe from notification types
 router.post(
     '/notifications/unsubscribe',
     authenticateToken,
-    asyncHandler(notificationController.unsubscribeFromNotifications)
+    asyncHandler(unsubscribeFromNotifications)
 );
 
 // Error handling middleware
@@ -86,4 +87,4 @@ const asyncHandler = (fn) => (req, res, next) => {
 };
 
 // Export the router
-module.exports = router;
+export default router;

@@ -1,10 +1,10 @@
-const nodemailer = require('nodemailer');
-const emailTemplates = require('../templates/email_template');
-const handlebars = require('handlebars');
+import { createTransport } from 'nodemailer';
+import emailTemplates from '../templates/email_template';
+import { compile } from 'handlebars';
 
 class NotificationService {
   constructor() {
-    this.transporter = nodemailer.createTransport({
+    this.transporter = createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_SECURE === 'true',
@@ -26,7 +26,7 @@ class NotificationService {
       }
 
       // Compile template
-      const compiledTemplate = handlebars.compile(template);
+      const compiledTemplate = compile(template);
       const html = compiledTemplate(data);
 
       // Send email
@@ -111,4 +111,4 @@ class NotificationService {
   }
 }
 
-module.exports = NotificationService;
+export default NotificationService;
