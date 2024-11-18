@@ -1,92 +1,56 @@
-const { Op } = require('sequelize');
-const Schedule = require('../models/schedule.model');
+import Schedule from '../models/schedule.model.js';
 
-class ScheduleService {
-  async createSchedule(scheduleData) {
-    try {
-      return await Schedule.create(scheduleData);
-    } catch (error) {
-      throw new Error(`Error creating schedule: ${error.message}`);
-    }
+export const create = async (scheduleData) => {
+  try {
+    const schedule = await Schedule.create(scheduleData);
+    return schedule;
+  } catch (error) {
+    throw error;
   }
+};
 
-  async getScheduleById(scheduleId) {
-    try {
-      const schedule = await Schedule.findByPk(scheduleId);
-      if (!schedule) {
-        throw new Error('Schedule not found');
-      }
-      return schedule;
-    } catch (error) {
-      throw new Error(`Error fetching schedule: ${error.message}`);
-    }
+export const getAll = async () => {
+  try {
+    const schedules = await Schedule.findAll();
+    return schedules;
+  } catch (error) {
+    throw error;
   }
+};
 
-  async getUserSchedules(userId) {
-    try {
-      return await Schedule.findAll({
-        where: { userId },
-        order: [['startTime', 'ASC']]
-      });
-    } catch (error) {
-      throw new Error(`Error fetching user schedules: ${error.message}`);
-    }
-  }
-
-  async updateSchedule(scheduleId, updateData) {
-    try {
-      const [updatedRowsCount, updatedSchedules] = await Schedule.update(
-        updateData,
-        {
-          where: { id: scheduleId },
-          returning: true
-        }
-      );
-
-      if (updatedRowsCount === 0) {
-        throw new Error('Schedule not found');
-      }
-
-      return updatedSchedules[0];
-    } catch (error) {
-      throw new Error(`Error updating schedule: ${error.message}`);
-    }
-  }
-
-  async deleteSchedule(scheduleId) {
-    try {
-      const deletedCount = await Schedule.destroy({
-        where: { id: scheduleId }
-      });
-
-      if (deletedCount === 0) {
-        throw new Error('Schedule not found');
-      }
-
-      return true;
-    } catch (error) {
-      throw new Error(`Error deleting schedule: ${error.message}`);
-    }
-  }
-
-  async getSchedulesByDateRange(userId, startDate, endDate) {
-    try {
-      return await Schedule.findAll({
-        where: {
-          userId,
-          startTime: {
-            [Op.gte]: startDate
-          },
-          endTime: {
-            [Op.lte]: endDate
-          }
-        },
-        order: [['startTime', 'ASC']]
-      });
-    } catch (error) {
-      throw new Error(`Error fetching schedules by date range: ${error.message}`);
-    }
+export const getScheduleById = async (id) => {
+  try {
+    const schedules = await Schedule.findAll({
+      where: { id },
+      order: [['startDate', 'ASC']] // Order by start date
+    });
+    
+    return schedules;
+  } catch (error) {
+    throw new Error(`Error fetching user schedules: ${error.message}`);
   }
 }
 
-module.exports = new ScheduleService();
+export const update = async (id, scheduleData) => {
+  try {
+    const schedule = await Schedule.update(scheduleData, {
+      where: { id },
+      returning: true,
+    });
+    return schedule[1][0]; // Returns the updated record
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const remove = async (id) => {
+  try {
+    const deleted = await Schedule.destroy({
+      where: { id }
+    });
+    return deleted;
+  } catch (error) {
+    throw error;
+  }
+};
+

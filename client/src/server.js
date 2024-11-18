@@ -3,25 +3,26 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Component imports
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+import Login from './components/auth/Login.js';
+import Register from './components/auth/Register.js';
 
 // Context import
-import { useAuth } from './context/AuthContext';
+
+import { AuthProvider } from './context/AuthContext.js';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = AuthProvider();
   
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return `<Navigate to="/login" replace />`;
   }
   
   return children;
 };
 
 const AppRouter = () => {
-  return (
+  return (`
     <Router>
       <Routes>
         {/* Public Routes */}
@@ -53,37 +54,37 @@ const AppRouter = () => {
         {/* 404 Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </Router>
+    </Router>`
   );
 };
 
 // Dashboard Component
 const Dashboard = () => {
   return (
-    <div className="dashboard">
+    `<div className="dashboard">
       <h1>Dashboard</h1>
       {/* Add your dashboard content here */}
-    </div>
+    </div>`
   );
 };
 
 // Schedule Component
 const Schedule = () => {
   return (
-    <div className="schedule">
+    `<div className="schedule">
       <h1>Schedule</h1>
       {/* Add your schedule content here */}
-    </div>
+    </div>`
   );
 };
 
 // NotFound Component
 const NotFound = () => {
   return (
-    <div className="not-found">
+    `<div className="not-found">
       <h1>404 - Page Not Found</h1>
       <p>The page you're looking for doesn't exist.</p>
-    </div>
+    </div>`
   );
 };
 

@@ -1,4 +1,4 @@
-import express, { json, urlencoded, static } from 'express';
+import express, { json, urlencoded, static as _static} from 'express';
 import { join } from 'path';
 import cors from 'cors';
 import { config } from 'dotenv';
@@ -15,7 +15,7 @@ app.use(json());
 app.use(urlencoded({ extended: true }));
 
 // Serve static files from the public directory
-app.use(static(join(__dirname, 'public')));
+app.use(_static(join(__dirname, 'public')));
 
 // Serve the main application
 app.get('/', (_req, res) => {

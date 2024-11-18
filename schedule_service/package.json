@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Schedule microservice",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "start": "node src/server.js"
   },
@@ -12,7 +13,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^7.2.0",
-    "mongoose": "^5.12.3",
+    "pg": "^8.13.1",
     "sequelize": "^6.37.4"
   }
 }

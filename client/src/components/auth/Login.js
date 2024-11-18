@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
-import { authService } from '../../services/authService';
+import { AuthContext } from '../../context/AuthContext.js';
+import authService from '../../services/authService.js';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
+    `<div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8">
       <h2 className="text-2xl font-bold mb-6">Login</h2>
       {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
       <form onSubmit={handleSubmit}>
@@ -50,7 +50,7 @@ const Login = () => {
           Login
         </button>
       </form>
-    </div>
+    </div>`
   );
 };
 

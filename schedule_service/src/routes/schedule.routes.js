@@ -1,18 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const scheduleController = require('../controllers/schedule.controller');
+import { Router } from 'express';
+import { createSchedule, getScheduleById, getUserSchedules, updateSchedule, deleteSchedule } from '../controllers/schedule.controller.js';
+
+// src/routes/schedule.routes.js
+const router = Router();
 
 // Create a new schedule
-router.post('/', scheduleController.createSchedule);
+router.post('/', createSchedule);
 // Get a specific schedule
-router.get('/:id', scheduleController.getSchedule);
+router.get('/:id', getScheduleById);
 // Get all schedules for a user
-router.get('/user/:userId', scheduleController.getUserSchedules);
-// Get schedules by date range
-router.get('/range', scheduleController.getSchedulesByDateRange);
+router.get('/user/:userId', getUserSchedules);
 // Update a schedule
-router.put('/:id', scheduleController.updateSchedule);
+router.put('/:id', updateSchedule);
 // Delete a schedule
-router.delete('/:id', scheduleController.deleteSchedule);
+router.delete('/:id', deleteSchedule);
 
-module.exports = router;
+export default router;
