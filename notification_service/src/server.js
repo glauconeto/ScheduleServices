@@ -1,19 +1,19 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const notificationController = require('./controllers/notification.controller');
+import express, { json } from 'express';
+import cors from 'cors';
+import { sendEmail, sendScheduleReminder, getNotificationStatus } from './controllers/notification.controller';
 
 const app = express();
 const PORT = process.env.PORT || 4003;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 // Routes
-app.post('/api/notifications/email', notificationController.sendEmail);
-app.post('/api/notifications/schedule-reminder', notificationController.sendScheduleReminder);
-app.get('/api/notifications/status', notificationController.getNotificationStatus);
+app.post('/api/notifications/email', sendEmail);
+app.post('/api/notifications/schedule-reminder', sendScheduleReminder);
+app.get('/api/notifications/status', getNotificationStatus);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
