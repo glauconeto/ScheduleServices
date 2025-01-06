@@ -1,35 +1,23 @@
-const API_URL = 'http://localhost:3000/auth'; // Update with your actual auth service URL
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
+import Dashboard from '../components/Dashboard';
+import { AuthProvider } from '../context/AuthContext';
 
-const authService = {
-    login: async (email, password) => {
-        const response = await fetch(`${API_URL}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-        if (!response.ok) {
-            throw new Error('Login failed');
-        }
-        return await response.json();
-    },
-    logout: () => {
-        // Handle logout logic
-    },
-    register: async (email, password) => {
-        const response = await fetch(`${API_URL}/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-        if (!response.ok) {
-            throw new Error('Registration failed');
-        }
-        return await response.json();
-    },
+const AppRoutes = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
 };
 
-export default authService;
+export default AppRoutes;
