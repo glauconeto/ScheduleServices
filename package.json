@@ -4,11 +4,9 @@
   "description": "Medical Clinic Scheduling System with Microservices Architecture",
   "scripts": {
     "start": "docker-compose up",
-    "dev": "docker-compose -f docker-compose.dev.yml up",
-    "test": "jest"
+    "dev": "docker-compose -f docker-compose.dev.yml up"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "nodemon": "^3.0.2"
   }
 }
